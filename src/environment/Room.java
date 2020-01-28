@@ -1,5 +1,6 @@
 package environment;
 
+@SuppressWarnings("WeakerAccess")
 public class Room {
 
     private boolean dust;

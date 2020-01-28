@@ -9,7 +9,9 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("InfiniteLoopStatement")
 public class Manor implements Environment, Runnable {
 
     private Room[][] rooms;
@@ -35,7 +37,22 @@ public class Manor implements Environment, Runnable {
 
     @Override
     public void run() {
-        //TODO Implements environment update
+        try {
+            while (true) {
+                int sleepTime = (int)(Math.random()*5) + 2;
+                TimeUnit.SECONDS.sleep(sleepTime);
+                int x = (int)(Math.random()*5);
+                int y = (int)(Math.random()*5);
+                if((int)(Math.random()*2) == 1) {
+                    rooms[x-1][y-1].putDust();
+                } else {
+                    rooms[x-1][y-1].putJewel();
+                }
+                updateView();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Room[][] getRooms() {

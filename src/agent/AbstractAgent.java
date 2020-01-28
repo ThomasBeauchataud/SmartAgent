@@ -4,7 +4,7 @@ import environment.Environment;
 
 import java.util.concurrent.TimeUnit;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess","InfiniteLoopStatement"})
 public abstract class AbstractAgent implements Agent, Runnable {
 
     private Environment environment;
