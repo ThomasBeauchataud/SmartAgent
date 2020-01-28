@@ -4,31 +4,31 @@ import environment.Environment;
 
 import java.util.concurrent.TimeUnit;
 
-public class AgentThread implements Runnable {
+@SuppressWarnings("WeakerAccess")
+public abstract class AbstractAgent implements Agent, Runnable {
 
     private Environment environment;
-    private Agent agent;
 
-    public AgentThread(Environment environment, Agent agent) {
+    public AbstractAgent(Environment environment) {
         this.environment = environment;
-        this.agent = agent;
     }
 
     @Override
     public void run() {
         try {
             while (true) {
-                if (agent.hasRealState(environment) && agent.hasActionPlan()) {
-                    agent.executeActionPlan(environment);
+                if (hasRealState(environment) && hasActionPlan()) {
+                    executeActionPlan(environment);
                     TimeUnit.SECONDS.sleep(1);
                 } else {
                     TimeUnit.SECONDS.sleep(1);
-                    agent.detect(environment);
-                    agent.generateActionPlan();
+                    detect(environment);
+                    generateActionPlan();
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

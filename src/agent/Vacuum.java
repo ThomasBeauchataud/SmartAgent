@@ -1,19 +1,22 @@
 package agent;
 
 import agent.actions.Action;
+import agent.decision.AgentDecisionMaking;
+import agent.decision.AgentDecisionMakingInterface;
 import environment.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vacuum implements Agent {
+public class Vacuum extends AbstractAgent {
 
     private Environment state;
     private List<Action> actionPlan;
     private AgentDecisionMakingInterface agentDecisionMaking;
     private int score;
 
-    public Vacuum() {
+    public Vacuum(Environment environment) {
+        super(environment);
         actionPlan = new ArrayList<>();
         agentDecisionMaking = new AgentDecisionMaking();
         score = 0;

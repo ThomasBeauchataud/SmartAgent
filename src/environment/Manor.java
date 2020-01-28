@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class Manor implements Environment {
+public class Manor implements Environment, Runnable {
 
     private Room[][] rooms;
     private Position vacuumPosition;
@@ -31,6 +31,11 @@ public class Manor implements Environment {
     @Override
     public boolean equalsTo(Environment environment) {
         return false;
+    }
+
+    @Override
+    public void run() {
+        //TODO Implements environment update
     }
 
     public Room[][] getRooms() {
