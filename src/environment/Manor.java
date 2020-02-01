@@ -18,6 +18,12 @@ public class Manor implements Environment, Runnable {
     private Position vacuumPosition;
     private GridPane root;
 
+    public Manor() {
+        loadRooms();
+        loadVacuumPosition();
+        updateView();
+    }
+
     public Manor(Stage primaryStage) {
         loadRoot(primaryStage);
         loadRooms();

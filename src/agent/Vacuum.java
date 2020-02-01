@@ -11,8 +11,8 @@ import environment.Environment;
  */
 public class Vacuum extends AbstractAgent {
 
-    public Vacuum(Environment environment) {
-        super(environment, new InformedAgentDecisionMaking());
+    public Vacuum(Environment environment, Environment perfectState) {
+        super(environment, new InformedAgentDecisionMaking(perfectState));
     }
 
 }

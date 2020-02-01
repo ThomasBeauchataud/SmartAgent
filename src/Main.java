@@ -10,7 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         Environment environment = new Manor(primaryStage);
-        Agent agent = new Vacuum(environment);
+        Agent agent = new Vacuum(environment, new Manor());
         new Thread((Runnable)environment).start();
         new Thread((Runnable)agent).start();
     }
@@ -18,4 +18,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
