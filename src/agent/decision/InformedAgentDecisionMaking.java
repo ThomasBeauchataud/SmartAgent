@@ -83,7 +83,6 @@ public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
                     }
                 }
             }
-
         }
         if(validNode == null) {
             return true;

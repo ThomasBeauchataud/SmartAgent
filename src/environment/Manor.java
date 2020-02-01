@@ -34,11 +34,37 @@ public class Manor implements Environment, Runnable {
     @Override
     public void updateView() {
         GridPane.setConstraints(root.getChildren().get(1), vacuumPosition.getX() * 150, vacuumPosition.getY() * 150);
+        //Temporary loop to print view on the console
+        for(int i = 0 ; i < 5 ; i++) {
+            for(int k = 0 ; k < 5 ; k++) {
+                if(vacuumPosition.getX() == i && vacuumPosition.getY() == k) {
+                    System.out.print("V");
+                } else {
+                    Room room = rooms[i][k];
+                    if(room.hasDust()) {
+                        System.out.print("D");
+                    } else if(room.hasJewel()) {
+                        System.out.print("J");
+                    } else {
+                        System.out.print("R");
+                    }
+                }
+            }
+            System.out.println();
+        }
     }
 
     @Override
     public boolean equalsTo(Environment environment) {
-        return false;
+        Room[][] rooms = ((Manor)environment).getRooms();
+        for(int i = 0 ; i < 5 ; i++) {
+            for(int k = 0 ; k < 5 ; k++) {
+                if(rooms[i][k].hasJewel() != this.rooms[i][k].hasJewel() || rooms[i][k].hasDust() != this.rooms[i][k].hasDust()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
