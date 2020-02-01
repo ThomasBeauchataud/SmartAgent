@@ -5,6 +5,11 @@ import environment.Manor;
 
 public class MoveBottom implements Action {
 
+    /**
+     * Execute an action of an Agent on his Environment and return the score modification for the agent
+     * @param environment Environment
+     * @return int
+     */
     @Override
     public int execute(Environment environment) {
         Manor manor = (Manor) environment;
