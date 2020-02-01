@@ -24,6 +24,7 @@ public class NoneInformedAgentDecisionMaking extends AbstractAgentDecisionMaking
      */
     @Override
     public List<Action> getRealActionPlan(Environment environment) {
+        //TODO Implements
         return null;
     }
 

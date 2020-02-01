@@ -24,6 +24,7 @@ public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
      */
     @Override
     public List<Action> getRealActionPlan(Environment environment) {
+
         return null;
     }
 
