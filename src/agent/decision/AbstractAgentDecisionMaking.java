@@ -1,18 +1,21 @@
 package agent.decision;
 
-import agent.actions.Action;
+import agent.actions.*;
 import environment.Environment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
 public abstract class AbstractAgentDecisionMaking implements AgentDecisionMaking {
 
     protected Environment perfectState;
+    protected List<Action> possibleActions;
 
     public AbstractAgentDecisionMaking(Environment perfectState) {
         this.perfectState = perfectState;
+        this.loadActions();
     }
 
     /**
@@ -41,5 +44,10 @@ public abstract class AbstractAgentDecisionMaking implements AgentDecisionMaking
      * @return boolean
      */
     protected abstract boolean isNotPerfectState(Environment environment);
+
+    /**
+     * Load the list of possible Actions for a Node
+     */
+    protected abstract void loadActions();
 
 }

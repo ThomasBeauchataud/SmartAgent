@@ -1,9 +1,10 @@
 package agent.decision;
 
-import agent.actions.Action;
+import agent.actions.*;
 import environment.Environment;
 import environment.Manor;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,5 +39,20 @@ public class NoneInformedAgentDecisionMaking extends AbstractAgentDecisionMaking
         Manor manor = (Manor)environment;
         Manor perfectManor = (Manor)this.perfectState;
         return !manor.equalsTo(perfectManor);
+    }
+
+    /**
+     * Load the list of possible Actions for a Node
+     */
+    @Override
+    protected void loadActions() {
+        this.possibleActions = Arrays.asList(
+                new MoveLeft(),
+                new MoveRight(),
+                new MoveTop(),
+                new MoveBottom(),
+                new Aspire(),
+                new PickUp()
+        );
     }
 }
