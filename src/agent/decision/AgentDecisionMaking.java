@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @since 01.02.2020
  * @author Thomas Beauchataud
- * This class contains all the logic of an Agent
+ * This class contains all the logic and exploration algorithms of an Agent
  */
 public interface AgentDecisionMaking {
 

@@ -3,6 +3,12 @@ package agent.actions;
 import environment.Environment;
 import environment.Manor;
 
+/**
+ * @since 01.02.2020
+ * @author Thomas Beauchataud
+ * This class represents the Aspire Action
+ * When this action is executed : the Agent go top in the Manor and return a score modification of -1
+ */
 public class MoveTop implements Action {
 
     /**

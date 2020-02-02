@@ -11,6 +11,11 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @since 01.02.2020
+ * @author Thomas Beauchataud
+ * This class represents the Manor (Environment of the Vaccum)
+ */
 @SuppressWarnings("InfiniteLoopStatement")
 public class Manor implements Environment, Runnable {
 
@@ -30,35 +35,33 @@ public class Manor implements Environment, Runnable {
         updateView();
     }
 
+    public Room[][] getRooms() {
+        return rooms;
+    }
+
+    public Position getVacuumPosition() {
+        return vacuumPosition;
+    }
+
+    /**
+     * Update the view of the environment (Console, Windows)
+     */
     @Override
     public void updateView() {
         GridPane.setConstraints(root.getChildren().get(1), vacuumPosition.getX() * 150, vacuumPosition.getY() * 150);
         //Temporary loop to print view on the console
-        System.out.println();
-        for(int i = 0 ; i < 5 ; i++) {
-            for(int k = 0 ; k < 5 ; k++) {
-                if(vacuumPosition.getX() == i && vacuumPosition.getY() == k) {
-                    System.out.print("V");
-                } else {
-                    Room room = rooms[i][k];
-                    if(room.hasDust()) {
-                        System.out.print("D");
-                    } else {
-                        if(room.hasJewel()) {
-                            System.out.print("J");
-                        } else {
-                            System.out.print("R");
-                        }
-                    }
-                }
-            }
-            System.out.println();
-        }
+        printConsole();
     }
 
+    /**
+     * Return true if an Environment is equals fully equals to an other
+     * @param environment Environment
+     * @return boolean
+     */
     @Override
     public boolean equalsTo(Environment environment) {
-        Room[][] rooms = ((Manor)environment).getRooms();
+        Manor manor = (Manor)environment;
+        Room[][] rooms = manor.getRooms();
         for(int i = 0 ; i < 5 ; i++) {
             for(int k = 0 ; k < 5 ; k++) {
                 if(rooms[i][k].hasJewel() != this.rooms[i][k].hasJewel() || rooms[i][k].hasDust() != this.rooms[i][k].hasDust()) {
@@ -66,9 +69,14 @@ public class Manor implements Environment, Runnable {
                 }
             }
         }
-        return true;
+        return manor.getVacuumPosition().getX() == this.getVacuumPosition().getX()
+                && manor.getVacuumPosition().getY() == this.getVacuumPosition().getY();
     }
 
+    /**
+     * Copy the Environment (method implemented for the creation of Nodes)
+     * @return Environment
+     */
     @Override
     public Environment copy() {
         Manor manor = new Manor();
@@ -83,6 +91,9 @@ public class Manor implements Environment, Runnable {
         return manor;
     }
 
+    /**
+     * Run the life cycle of the Vacuum
+     */
     @Override
     public void run() {
         try {
@@ -109,14 +120,10 @@ public class Manor implements Environment, Runnable {
         }
     }
 
-    public Room[][] getRooms() {
-        return rooms;
-    }
-
-    public Position getVacuumPosition() {
-        return vacuumPosition;
-    }
-
+    /**
+     * Initialize the JavaFX view
+     * @param primaryStage Stage
+     */
     private void loadRoot(Stage primaryStage) {
         try {
             root = new GridPane();
@@ -140,6 +147,9 @@ public class Manor implements Environment, Runnable {
         }
     }
 
+    /**
+     * Create Rooms of the Manor
+     */
     private void loadRooms() {
         rooms = new Room[5][5];
         for(int i = 0 ; i < 5 ; i++) {
@@ -149,10 +159,39 @@ public class Manor implements Environment, Runnable {
         }
     }
 
+    /**
+     * Initialize the Vacuum Position in the middle of the Manor
+     */
     private void loadVacuumPosition() {
         vacuumPosition = new Position();
         vacuumPosition.setX(2);
         vacuumPosition.setY(2);
+    }
+
+    /**
+     * Print the view of the Manor in the console
+     */
+    private void printConsole() {
+        System.out.println();
+        for(int i = 0 ; i < 5 ; i++) {
+            for(int k = 0 ; k < 5 ; k++) {
+                if(vacuumPosition.getX() == i && vacuumPosition.getY() == k) {
+                    System.out.print("V");
+                } else {
+                    Room room = rooms[i][k];
+                    if(room.hasDust()) {
+                        System.out.print("D");
+                    } else {
+                        if(room.hasJewel()) {
+                            System.out.print("J");
+                        } else {
+                            System.out.print("R");
+                        }
+                    }
+                }
+            }
+            System.out.println();
+        }
     }
 
 }

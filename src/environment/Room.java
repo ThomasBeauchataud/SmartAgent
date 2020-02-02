@@ -1,6 +1,11 @@
 package environment;
 
-@SuppressWarnings("WeakerAccess")
+/**
+ * @since 01.02.2020
+ * @author Thomas Beauchataud
+ * This class represents a Room of a Manor
+ */
+@SuppressWarnings({"WeakerAccess","BooleanMethodIsAlwaysInverted"})
 public class Room {
 
     private boolean dust;
@@ -37,4 +42,9 @@ public class Room {
     public void setJewel(boolean jewel) {
         this.jewel = jewel;
     }
+
+    public boolean equalsTo(Room room) {
+        return (room.hasDust() == this.hasDust() && room.hasJewel() == this.hasJewel());
+    }
+
 }

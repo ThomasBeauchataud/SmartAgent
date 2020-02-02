@@ -1,6 +1,7 @@
 package agent;
 
 import agent.decision.InformedAgentDecisionMaking;
+import agent.decision.NoneInformedAgentDecisionMaking;
 import environment.Environment;
 
 /**
@@ -12,7 +13,11 @@ import environment.Environment;
 public class Vacuum extends AbstractAgent {
 
     public Vacuum(Environment environment, Environment perfectState) {
-        super(environment, new InformedAgentDecisionMaking(perfectState));
+        super(
+                environment,
+                new NoneInformedAgentDecisionMaking(perfectState)
+                //new InformedAgentDecisionMaking(perfectState);
+        );
     }
 
 }

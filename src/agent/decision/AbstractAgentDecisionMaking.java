@@ -6,6 +6,11 @@ import environment.Environment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @since 01.02.2020
+ * @author Thomas Beauchataud
+ * This class contains generic methods for the logic and exploration algorithm of any kinf of Agents
+ */
 @SuppressWarnings("WeakerAccess")
 public abstract class AbstractAgentDecisionMaking implements AgentDecisionMaking {
 

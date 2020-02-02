@@ -4,14 +4,16 @@ import agent.actions.*;
 import environment.Environment;
 import environment.Manor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @since 01.02.2020
  * @author Thomas Beauchataud
- * This class contains all the logic of a none informed Agent
+ * This class contains all the logic and the exploration algorithm of a none informed Agent
  */
+@SuppressWarnings("Duplicates")
 public class NoneInformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
 
     public NoneInformedAgentDecisionMaking(Environment perfectState) {
@@ -25,8 +27,17 @@ public class NoneInformedAgentDecisionMaking extends AbstractAgentDecisionMaking
      */
     @Override
     public List<Action> getRealActionPlan(Environment environment) {
-        //TODO Implements
-        return null;
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(new ManorNode(environment));
+        while(this.hasNoSolution(nodes)) {
+            List<Node> recentNodes = new ArrayList<>();
+            for(Node node : nodes) {
+                recentNodes.addAll(node.expand(this.possibleActions));
+            }
+            nodes.clear();
+            nodes.addAll(recentNodes);
+        }
+        return nodes.get(0).getActions();
     }
 
     /**
@@ -38,7 +49,14 @@ public class NoneInformedAgentDecisionMaking extends AbstractAgentDecisionMaking
     protected boolean isNotPerfectState(Environment environment) {
         Manor manor = (Manor)environment;
         Manor perfectManor = (Manor)this.perfectState;
-        return !manor.equalsTo(perfectManor);
+        for(int i = 0 ; i < manor.getRooms().length ; i++) {
+            for(int k = 0 ; k < manor.getRooms().length ; k++) {
+                if(!perfectManor.getRooms()[i][k].equalsTo(manor.getRooms()[i][k])) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -55,4 +73,32 @@ public class NoneInformedAgentDecisionMaking extends AbstractAgentDecisionMaking
                 new PickUp()
         );
     }
+
+    /**
+     * Return false if a List of Node has a solution and clear it before inserting the solution in it
+     * @param nodes Node[]
+     * @return boolean
+     */
+    private boolean hasNoSolution(List<Node> nodes) {
+        Node validNode = null;
+        for(Node node : nodes) {
+            if(!isNotPerfectState(node.getState())) {
+                if(validNode == null) {
+                    validNode = node;
+                } else {
+                    if(validNode.getScore() < node.getScore()) {
+                        validNode = node;
+                    }
+                }
+            }
+        }
+        if(validNode == null) {
+            return true;
+        } else {
+            nodes.clear();
+            nodes.add(validNode);
+            return false;
+        }
+    }
+
 }

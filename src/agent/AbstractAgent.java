@@ -49,11 +49,7 @@ public abstract class AbstractAgent implements Agent, Runnable {
             System.out.println("No action plan : environment equals to the perfect state");
             return;
         }
-        System.out.print("New action plan generated : ");
-        for(Action action : actionPlan) {
-            System.out.print(action.getClass().getSimpleName() + " / ");
-            System.out.println();
-        }
+        printActionPlan();
     }
 
     /**
@@ -109,6 +105,14 @@ public abstract class AbstractAgent implements Agent, Runnable {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void printActionPlan() {
+        System.out.print("New action plan generated : ");
+        for(Action action : actionPlan) {
+            System.out.print(action.getClass().getSimpleName() + " / ");
+            System.out.println();
         }
     }
 

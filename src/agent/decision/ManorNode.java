@@ -7,23 +7,33 @@ import environment.Manor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @since 01.02.2020
+ * @author Thomas Beauchataud
+ * This class represents a Node of the Manor
+ */
 @SuppressWarnings("WeakerAccess")
 public class ManorNode extends Node {
 
     public ManorNode(Environment state) {
-        this.state = state.copy();
-        this.actions = new ArrayList<>();
+        super(new ArrayList<>(), state.copy(), 0);
     }
 
     public ManorNode(Environment state, List<Action> actions, Action action, int score) {
-        this.state = state.copy();
-        this.score = score;
-        this.actions = new ArrayList<>();
+        super(new ArrayList<>(), state.copy(), score);
         this.actions.addAll(actions);
         this.score += action.execute(this.state);
         this.actions.add(action);
     }
 
+    /**
+     * Expand a Node with possible actions and return new generated Nodes
+     * The Action list is not filtered,
+     *      they contain all Action that the Agent can execute careless of his environment
+     *      the method filterPossibleActions() filterer impossible Action of the Agent cause of the environment
+     * @param actions Action
+     * @return Action[]
+     */
     @Override
     public List<Node> expand(List<Action> actions) {
         List<Node> nodes = new ArrayList<>();
@@ -33,6 +43,11 @@ public class ManorNode extends Node {
         return nodes;
     }
 
+    /**
+     * Filter Action that an Agent can't execute cause of his environment
+     * @param actions Action[]
+     * @return Action[]
+     */
     private List<Action> filterPossibleActions(List<Action> actions) {
         Manor manor = (Manor)state;
         List<Action> finalActions = new ArrayList<>();

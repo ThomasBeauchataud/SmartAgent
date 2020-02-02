@@ -1,6 +1,10 @@
 package environment;
 
-@SuppressWarnings("WeakerAccess")
+/**
+ * @since 01.02.2020
+ * @author Thomas Beauchataud
+* This class represents the Position of the Vaccum in the Manor by his indexs in the array of Rooms
+ */
 public class Position {
 
     private int x;
@@ -20,7 +24,4 @@ public class Position {
         this.y = y;
     }
 
-    public boolean equalsTo(Position position) {
-        return (x == position.getX() && y == position.getY());
-    }
 }

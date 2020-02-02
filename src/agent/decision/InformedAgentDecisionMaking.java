@@ -4,15 +4,15 @@ import agent.actions.*;
 import environment.Environment;
 import environment.Manor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @since 01.02.2020
  * @author Thomas Beauchataud
- * This class contains all the logic of an informed Agent
+ * This class contains all the logic and the exploration algorithm of an informed Agent
  */
+@SuppressWarnings("Duplicates")
 public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
 
     public InformedAgentDecisionMaking(Environment perfectState) {
@@ -26,20 +26,8 @@ public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
      */
     @Override
     public List<Action> getRealActionPlan(Environment environment) {
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(new ManorNode(environment));
-        while(this.hasNoSolution(nodes)) {
-            List<Node> recentNodes = new ArrayList<>();
-            for(Node node : nodes) {
-                if(nodes.size() == 1 || (!node.getState().equalsTo(environment)
-                || !((Manor)node.getState()).getVacuumPosition().equalsTo(((Manor)environment).getVacuumPosition()))) {
-                    recentNodes.addAll(node.expand(this.possibleActions));
-                }
-            }
-            nodes.clear();
-            nodes.addAll(recentNodes);
-        }
-        return nodes.get(0).getActions();
+        //TODO Implements
+        return null;
     }
 
     /**
@@ -51,7 +39,14 @@ public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
     protected boolean isNotPerfectState(Environment environment) {
         Manor manor = (Manor)environment;
         Manor perfectManor = (Manor)this.perfectState;
-        return !manor.equalsTo(perfectManor);
+        for(int i = 0 ; i < manor.getRooms().length ; i++) {
+            for(int k = 0 ; k < manor.getRooms().length ; k++) {
+                if(!perfectManor.getRooms()[i][k].equalsTo(manor.getRooms()[i][k])) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -68,32 +63,4 @@ public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
                 new PickUp()
         );
     }
-
-    /**
-     * Return false if a List of Node has a solution and clear it before inserting the solution in it
-     * @param nodes Node[]
-     * @return boolean
-     */
-    private boolean hasNoSolution(List<Node> nodes) {
-        Node validNode = null;
-        for(Node node : nodes) {
-            if(node.getState().equalsTo(perfectState)) {
-                if(validNode == null) {
-                    validNode = node;
-                } else {
-                    if(validNode.getScore() < node.getScore()) {
-                        validNode = node;
-                    }
-                }
-            }
-        }
-        if(validNode == null) {
-            return true;
-        } else {
-            nodes.clear();
-            nodes.add(validNode);
-            return false;
-        }
-    }
-
 }
