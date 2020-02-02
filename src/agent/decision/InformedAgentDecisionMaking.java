@@ -27,7 +27,7 @@ public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
     @Override
     public List<Action> getRealActionPlan(Environment environment) {
         List<Node> nodes = new ArrayList<>();
-        nodes.add(new Node(environment));
+        nodes.add(new ManorNode(environment));
         while(this.hasNoSolution(nodes)) {
             List<Node> recentNodes = new ArrayList<>();
             for(Node node : nodes) {
