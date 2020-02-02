@@ -1,6 +1,7 @@
 package agent.decision;
 
 import agent.actions.*;
+import agent.decision.nodes.Node;
 import environment.Environment;
 
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import java.util.List;
  * @author Thomas Beauchataud
  * This class contains generic methods for the logic and exploration algorithm of any kinf of Agents
  */
-@SuppressWarnings("WeakerAccess")
 public abstract class AbstractAgentDecisionMaking implements AgentDecisionMaking {
 
     protected Environment perfectState;
@@ -36,6 +36,13 @@ public abstract class AbstractAgentDecisionMaking implements AgentDecisionMaking
     }
 
     /**
+     * Return the first Node to expand
+     * @param environment Environment
+     * @return Node
+     */
+    protected abstract Node getFirstNode(Environment environment);
+
+    /**
      * Generate a List of Action to execute when the perfect state is not reached
      * @param environment Environment
      * @return Action[]
@@ -53,5 +60,32 @@ public abstract class AbstractAgentDecisionMaking implements AgentDecisionMaking
      * Load the list of possible Actions for a Node
      */
     protected abstract void loadActions();
+
+    /**
+     * Return false if a List of Node has a solution and clear it before inserting the solution in it
+     * @param nodes Node[]
+     * @return boolean
+     */
+    protected boolean hasNoSolution(List<Node> nodes) {
+        Node validNode = null;
+        for(Node node : nodes) {
+            if(!isNotPerfectState(node.getState())) {
+                if(validNode == null) {
+                    validNode = node;
+                } else {
+                    if(validNode.getScore() < node.getScore()) {
+                        validNode = node;
+                    }
+                }
+            }
+        }
+        if(validNode == null) {
+            return true;
+        } else {
+            nodes.clear();
+            nodes.add(validNode);
+            return false;
+        }
+    }
 
 }

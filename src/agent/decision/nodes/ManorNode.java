@@ -1,4 +1,4 @@
-package agent.decision;
+package agent.decision.nodes;
 
 import agent.actions.*;
 import environment.Environment;

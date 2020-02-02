@@ -98,7 +98,7 @@ public class Manor implements Environment, Runnable {
     public void run() {
         try {
             while (true) {
-                int sleepTime = (int)(Math.random()*5) + 3;
+                int sleepTime = (int)(Math.random()*3) + 3;
                 TimeUnit.SECONDS.sleep(sleepTime);
                 int x = (int)(Math.random()*5);
                 if(x < 1) {

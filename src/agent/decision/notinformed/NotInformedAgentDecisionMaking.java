@@ -1,33 +1,28 @@
-package agent.decision;
+package agent.decision.notinformed;
 
 import agent.actions.*;
+import agent.decision.nodes.ManorNode;
+import agent.decision.nodes.Node;
 import environment.Environment;
 import environment.Manor;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @since 01.02.2020
  * @author Thomas Beauchataud
- * This class contains all the logic and the exploration algorithm of an informed Agent
+ * This class contains all the logic and the exploration algorithm of an not informed Agent Vacuum in the Manor
  */
 @SuppressWarnings("Duplicates")
-public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
+public class NotInformedAgentDecisionMaking extends AbstractNotInformedAgentDecisionMaking {
 
-    public InformedAgentDecisionMaking(Environment perfectState) {
+    public NotInformedAgentDecisionMaking(Environment perfectState) {
         super(perfectState);
     }
 
-    /**
-     * Generate a List of Action to execute when the perfect state is not reached
-     * @param environment Environment
-     * @return Action[]
-     */
     @Override
-    public List<Action> getRealActionPlan(Environment environment) {
-        //TODO Implements
-        return null;
+    protected Node getFirstNode(Environment environment) {
+        return new ManorNode(environment);
     }
 
     /**
@@ -63,4 +58,5 @@ public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
                 new PickUp()
         );
     }
+
 }
