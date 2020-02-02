@@ -1,5 +1,6 @@
 package environment;
 
+@SuppressWarnings("WeakerAccess")
 public class Position {
 
     private int x;
@@ -17,5 +18,9 @@ public class Position {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean equalsTo(Position position) {
+        return (x == position.getX() && y == position.getY());
     }
 }

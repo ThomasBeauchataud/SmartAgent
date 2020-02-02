@@ -6,4 +6,6 @@ public interface Environment {
 
     boolean equalsTo(Environment environment);
 
+    Environment copy();
+
 }

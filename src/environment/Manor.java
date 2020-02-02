@@ -21,7 +21,6 @@ public class Manor implements Environment, Runnable {
     public Manor() {
         loadRooms();
         loadVacuumPosition();
-        updateView();
     }
 
     public Manor(Stage primaryStage) {
@@ -35,6 +34,7 @@ public class Manor implements Environment, Runnable {
     public void updateView() {
         GridPane.setConstraints(root.getChildren().get(1), vacuumPosition.getX() * 150, vacuumPosition.getY() * 150);
         //Temporary loop to print view on the console
+        System.out.println();
         for(int i = 0 ; i < 5 ; i++) {
             for(int k = 0 ; k < 5 ; k++) {
                 if(vacuumPosition.getX() == i && vacuumPosition.getY() == k) {
@@ -43,10 +43,12 @@ public class Manor implements Environment, Runnable {
                     Room room = rooms[i][k];
                     if(room.hasDust()) {
                         System.out.print("D");
-                    } else if(room.hasJewel()) {
-                        System.out.print("J");
                     } else {
-                        System.out.print("R");
+                        if(room.hasJewel()) {
+                            System.out.print("J");
+                        } else {
+                            System.out.print("R");
+                        }
                     }
                 }
             }
@@ -68,13 +70,33 @@ public class Manor implements Environment, Runnable {
     }
 
     @Override
+    public Environment copy() {
+        Manor manor = new Manor();
+        manor.getVacuumPosition().setY(this.vacuumPosition.getY());
+        manor.getVacuumPosition().setX(this.vacuumPosition.getX());
+        for(int i = 0 ; i < 5 ; i++) {
+            for(int k = 0 ; k < 5 ; k++) {
+                manor.getRooms()[i][k].setDust(this.rooms[i][k].hasDust());
+                manor.getRooms()[i][k].setJewel(this.rooms[i][k].hasJewel());
+            }
+        }
+        return manor;
+    }
+
+    @Override
     public void run() {
         try {
             while (true) {
-                int sleepTime = (int)(Math.random()*5) + 2;
+                int sleepTime = (int)(Math.random()*5) + 3;
                 TimeUnit.SECONDS.sleep(sleepTime);
                 int x = (int)(Math.random()*5);
+                if(x < 1) {
+                    x = 1;
+                }
                 int y = (int)(Math.random()*5);
+                if(y < 1) {
+                    y = 1;
+                }
                 if((int)(Math.random()*2) == 1) {
                     rooms[x-1][y-1].putDust();
                 } else {

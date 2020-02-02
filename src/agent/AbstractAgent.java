@@ -43,12 +43,13 @@ public abstract class AbstractAgent implements Agent, Runnable {
      */
     @Override
     public void generateActionPlan() {
+        System.out.println("Generating a new action plan");
         this.actionPlan = agentDecisionMaking.getActionPlan(state);
-        if(actionPlan == null) {
-            System.out.println("No action plan for the agent");
+        if(actionPlan.size() == 0) {
+            System.out.println("No action plan : environment equals to the perfect state");
             return;
         }
-        System.out.print("New action plan for the agent : ");
+        System.out.print("New action plan generated : ");
         for(Action action : actionPlan) {
             System.out.print(action.getClass().getSimpleName() + " / ");
             System.out.println();

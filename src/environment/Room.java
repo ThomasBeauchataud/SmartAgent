@@ -30,4 +30,11 @@ public class Room {
         this.jewel = false;
     }
 
+    public void setDust(boolean dust) {
+        this.dust = dust;
+    }
+
+    public void setJewel(boolean jewel) {
+        this.jewel = jewel;
+    }
 }

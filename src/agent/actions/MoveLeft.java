@@ -14,7 +14,7 @@ public class MoveLeft implements Action {
     public int execute(Environment environment) {
         Manor manor = (Manor) environment;
         if(manor.getVacuumPosition().getX() != 0) {
-            manor.getVacuumPosition().setY(manor.getVacuumPosition().getX() - 1);
+            manor.getVacuumPosition().setX(manor.getVacuumPosition().getX() - 1);
         }
         return -1;
     }

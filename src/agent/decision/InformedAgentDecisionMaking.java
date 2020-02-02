@@ -31,7 +31,10 @@ public class InformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
         while(this.hasNoSolution(nodes)) {
             List<Node> recentNodes = new ArrayList<>();
             for(Node node : nodes) {
-                recentNodes.addAll(node.expand(this.possibleActions));
+                if(nodes.size() == 1 || (!node.getState().equalsTo(environment)
+                || !((Manor)node.getState()).getVacuumPosition().equalsTo(((Manor)environment).getVacuumPosition()))) {
+                    recentNodes.addAll(node.expand(this.possibleActions));
+                }
             }
             nodes.clear();
             nodes.addAll(recentNodes);
