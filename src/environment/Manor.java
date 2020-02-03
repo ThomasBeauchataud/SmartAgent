@@ -1,14 +1,7 @@
 package environment;
 
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.stage.Stage;
+import view.View;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,18 +14,10 @@ public class Manor implements Environment, Runnable {
 
     private Room[][] rooms;
     private Position vacuumPosition;
-    private GridPane root;
 
     public Manor() {
         loadRooms();
         loadVacuumPosition();
-    }
-
-    public Manor(Stage primaryStage) {
-        loadRoot(primaryStage);
-        loadRooms();
-        loadVacuumPosition();
-        updateView();
     }
 
     public Room[][] getRooms() {
@@ -48,9 +33,7 @@ public class Manor implements Environment, Runnable {
      */
     @Override
     public void updateView() {
-        GridPane.setConstraints(root.getChildren().get(1), vacuumPosition.getX() * 150, vacuumPosition.getY() * 150);
-        //Temporary loop to print view on the console
-        printConsole();
+        View.getInstance().update(this);
     }
 
     /**
@@ -64,7 +47,8 @@ public class Manor implements Environment, Runnable {
         Room[][] rooms = manor.getRooms();
         for(int i = 0 ; i < 5 ; i++) {
             for(int k = 0 ; k < 5 ; k++) {
-                if(rooms[i][k].hasJewel() != this.rooms[i][k].hasJewel() || rooms[i][k].hasDust() != this.rooms[i][k].hasDust()) {
+                if(rooms[i][k].hasJewel() != this.rooms[i][k].hasJewel()
+                || rooms[i][k].hasDust() != this.rooms[i][k].hasDust()) {
                     return false;
                 }
             }
@@ -98,7 +82,7 @@ public class Manor implements Environment, Runnable {
     public void run() {
         try {
             while (true) {
-                int sleepTime = (int)(Math.random()*3) + 3;
+                int sleepTime = (int)(Math.random()*4) + 3;
                 TimeUnit.SECONDS.sleep(sleepTime);
                 int x = (int)(Math.random()*5);
                 if(x < 1) {
@@ -121,33 +105,6 @@ public class Manor implements Environment, Runnable {
     }
 
     /**
-     * Initialize the JavaFX view
-     * @param primaryStage Stage
-     */
-    private void loadRoot(Stage primaryStage) {
-        try {
-            root = new GridPane();
-            for (int i = 0; i < 5 ; i++) {
-                ColumnConstraints column = new ColumnConstraints(150);
-                RowConstraints row = new RowConstraints(150);
-                root.getColumnConstraints().add(column);
-                root.getRowConstraints().add(row);
-            }
-            root.setGridLinesVisible(true);
-            root.getChildren().add(new ImageView(new Image(
-                    new File(System.getProperty("user.dir") + "/resources/vacuum.png").toURI().toString())));
-            primaryStage.setTitle("Smart Agent");
-            Scene scene = new Scene(root, 750, 750);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error while trying to load the scene");
-            System.exit(1);
-        }
-    }
-
-    /**
      * Create Rooms of the Manor
      */
     private void loadRooms() {
@@ -166,32 +123,6 @@ public class Manor implements Environment, Runnable {
         vacuumPosition = new Position();
         vacuumPosition.setX(2);
         vacuumPosition.setY(2);
-    }
-
-    /**
-     * Print the view of the Manor in the console
-     */
-    private void printConsole() {
-        System.out.println();
-        for(int i = 0 ; i < 5 ; i++) {
-            for(int k = 0 ; k < 5 ; k++) {
-                if(vacuumPosition.getX() == i && vacuumPosition.getY() == k) {
-                    System.out.print("V");
-                } else {
-                    Room room = rooms[i][k];
-                    if(room.hasDust()) {
-                        System.out.print("D");
-                    } else {
-                        if(room.hasJewel()) {
-                            System.out.print("J");
-                        } else {
-                            System.out.print("R");
-                        }
-                    }
-                }
-            }
-            System.out.println();
-        }
     }
 
 }

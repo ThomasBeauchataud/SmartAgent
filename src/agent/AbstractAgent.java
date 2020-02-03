@@ -3,6 +3,7 @@ package agent;
 import agent.actions.Action;
 import agent.decision.AgentDecisionMaking;
 import environment.Environment;
+import view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public abstract class AbstractAgent implements Agent, Runnable {
      */
     @Override
     public void detect(Environment environment) {
-        state = environment;
+        state = environment.copy();
     }
 
     /**
@@ -43,13 +44,12 @@ public abstract class AbstractAgent implements Agent, Runnable {
      */
     @Override
     public void generateActionPlan() {
-        System.out.println("Generating a new action plan");
         this.actionPlan = agentDecisionMaking.getActionPlan(state);
         if(actionPlan.size() == 0) {
-            System.out.println("No action plan : environment equals to the perfect state");
+            View.getInstance().getActionPlanView().setText("No action plan : environment equals to the perfect state");
             return;
         }
-        printActionPlan();
+        View.getInstance().getActionPlanView().setText(actionPlanToString());
     }
 
     /**
@@ -59,10 +59,10 @@ public abstract class AbstractAgent implements Agent, Runnable {
     @Override
     public void executeActionPlan(Environment environment) {
         score += actionPlan.get(0).execute(environment);
+        actionPlan.get(0).execute(state);
         actionPlan.remove(0);
-        state = environment;
         environment.updateView();
-        System.out.println("New score for the agent : " + score);
+        View.getInstance().getScoreView().setText("Score : " + score);
     }
 
     /**
@@ -108,12 +108,13 @@ public abstract class AbstractAgent implements Agent, Runnable {
         }
     }
 
-    private void printActionPlan() {
-        System.out.print("New action plan generated : ");
+    private String actionPlanToString() {
+        StringBuilder stringBuilder = new StringBuilder("Action plan : ");
         for(Action action : actionPlan) {
-            System.out.print(action.getClass().getSimpleName() + " / ");
-            System.out.println();
+            stringBuilder.append(action.getClass().getSimpleName()).append(", ");
         }
+        stringBuilder.delete(stringBuilder.length()-2, stringBuilder.length());
+        return stringBuilder.toString();
     }
 
 }
