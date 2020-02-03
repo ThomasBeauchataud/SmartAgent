@@ -7,7 +7,6 @@ import view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @since 01.02.2020
@@ -96,9 +95,8 @@ public abstract class AbstractAgent implements Agent, Runnable {
             while (true) {
                 if (hasRealState(environment) && hasActionPlan()) {
                     executeActionPlan(environment);
-                    TimeUnit.SECONDS.sleep(1);
+                    Thread.sleep(700);
                 } else {
-                    TimeUnit.SECONDS.sleep(1);
                     detect(environment);
                     generateActionPlan();
                 }

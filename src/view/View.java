@@ -3,6 +3,7 @@ package view;
 import environment.Manor;
 import environment.Position;
 import environment.Room;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,21 +43,27 @@ public class View {
                 manorView.getRowConstraints().add(row);
             }
             manorView.setGridLinesVisible(true);
-            manorView.getChildren().add(new ImageView(new Image(
-                    new File(System.getProperty("user.dir") + "/resources/vacuum.png").toURI().toString())));
+            ImageView vacuumView = new ImageView(new Image(
+                    new File(System.getProperty("user.dir") + "/resources/vacuum.png").toURI().toString()));
+            GridPane.setMargin(vacuumView, new Insets(0, 0, 75, 37));
+            manorView.getChildren().add(vacuumView);
             primaryStage.setTitle("Smart Agent");
             Scene scene = new Scene(pane, 750, 805);
             primaryStage.setScene(scene);
             primaryStage.show();
             for(int i = 0 ; i < 5 ; i++) {
                 for (int k = 0; k < 5; k++) {
-                    manorView.getChildren().add(new ImageView(new Image(
+                    ImageView dustView = new ImageView(new Image(
                             new File(System.getProperty("user.dir") + "/resources/dust.png").toURI().toString()
-                    )));
+                    ));
+                    GridPane.setMargin(dustView, new Insets(75,0,0,5));
+                    manorView.getChildren().add(dustView);
                     GridPane.setConstraints(manorView.getChildren().get(manorView.getChildren().size() - 1), k, i);
-                    manorView.getChildren().add(new ImageView(new Image(
+                    ImageView jewelView = new ImageView(new Image(
                             new File(System.getProperty("user.dir") + "/resources/jewel.png").toURI().toString()
-                    )));
+                    ));
+                    GridPane.setMargin(jewelView, new Insets(75,0,0,70));
+                    manorView.getChildren().add(jewelView);
                     GridPane.setConstraints(manorView.getChildren().get(manorView.getChildren().size() - 1), k, i);
                 }
             }
