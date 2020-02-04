@@ -92,7 +92,7 @@ public class Manor implements Environment, Runnable {
                 if(y < 1) {
                     y = 1;
                 }
-                if((int)(Math.random()*2) == 1) {
+                if((int)(Math.random()) >= 0.5) {
                     rooms[x-1][y-1].putDust();
                 } else {
                     rooms[x-1][y-1].putJewel();
