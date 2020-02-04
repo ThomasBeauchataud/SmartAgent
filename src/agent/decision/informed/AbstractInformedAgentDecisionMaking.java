@@ -16,8 +16,8 @@ import java.util.List;
 @SuppressWarnings({"Duplicates","WeakerAccess"})
 public abstract class AbstractInformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
 
-    public AbstractInformedAgentDecisionMaking(Environment perfectState) {
-        super(perfectState);
+    public AbstractInformedAgentDecisionMaking(Environment perfectState, List<Action> actions) {
+        super(perfectState, actions);
     }
 
     /**

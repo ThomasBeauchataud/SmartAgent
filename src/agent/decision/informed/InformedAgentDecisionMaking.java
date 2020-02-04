@@ -6,7 +6,7 @@ import agent.decision.nodes.Node;
 import environment.Environment;
 import environment.Manor;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * @since 01.02.2020
@@ -16,8 +16,8 @@ import java.util.Arrays;
 @SuppressWarnings("Duplicates")
 public class InformedAgentDecisionMaking extends AbstractInformedAgentDecisionMaking {
 
-    public InformedAgentDecisionMaking(Environment perfectState) {
-        super(perfectState);
+    public InformedAgentDecisionMaking(Environment perfectState, List<Action> actions) {
+        super(perfectState, actions);
     }
 
     /**
@@ -47,21 +47,6 @@ public class InformedAgentDecisionMaking extends AbstractInformedAgentDecisionMa
             }
         }
         return false;
-    }
-
-    /**
-     * Load the list of possible Actions for a Node
-     */
-    @Override
-    protected void loadActions() {
-        this.possibleActions = Arrays.asList(
-                new MoveLeft(),
-                new MoveRight(),
-                new MoveTop(),
-                new MoveBottom(),
-                new Aspire(),
-                new PickUp()
-        );
     }
 
 }

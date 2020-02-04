@@ -17,9 +17,9 @@ public abstract class AbstractAgentDecisionMaking implements AgentDecisionMaking
     protected Environment perfectState;
     protected List<Action> possibleActions;
 
-    public AbstractAgentDecisionMaking(Environment perfectState) {
+    public AbstractAgentDecisionMaking(Environment perfectState, List<Action> actions) {
         this.perfectState = perfectState;
-        this.loadActions();
+        this.possibleActions = actions;
     }
 
     /**
@@ -55,11 +55,6 @@ public abstract class AbstractAgentDecisionMaking implements AgentDecisionMaking
      * @return boolean
      */
     protected abstract boolean isNotPerfectState(Environment environment);
-
-    /**
-     * Load the list of possible Actions for a Node
-     */
-    protected abstract void loadActions();
 
     /**
      * Return false if a List of Node has a solution and clear it before inserting the solution in it

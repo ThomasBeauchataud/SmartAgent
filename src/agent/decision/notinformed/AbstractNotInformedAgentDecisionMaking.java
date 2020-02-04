@@ -16,8 +16,8 @@ import java.util.List;
 @SuppressWarnings("WeakerAccess")
 public abstract class AbstractNotInformedAgentDecisionMaking extends AbstractAgentDecisionMaking {
 
-    public AbstractNotInformedAgentDecisionMaking(Environment perfectState) {
-        super(perfectState);
+    public AbstractNotInformedAgentDecisionMaking(Environment perfectState, List<Action> actions) {
+        super(perfectState, actions);
     }
 
     /**
