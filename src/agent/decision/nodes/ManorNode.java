@@ -53,13 +53,13 @@ public class ManorNode extends Node {
         List<Action> finalActions = new ArrayList<>();
         for(Action action : actions) {
             if(!(action.getClass() == MoveTop.class
-                    && (manor.getVacuumPosition().getY() == 0
+                    && (manor.getVacuumPosition().getX() == 0
                         || (this.actions.size() > 0 && this.actions.get(0).getClass() == MoveBottom.class)))
             && !(action.getClass() == MoveBottom.class
-                    && (manor.getVacuumPosition().getY() == 4
+                    && (manor.getVacuumPosition().getX() == 4
                         || (this.actions.size() > 0 && this.actions.get(0).getClass() == MoveTop.class)))
             && !(action.getClass() == MoveLeft.class
-                    && (manor.getVacuumPosition().getX() == 0
+                    && (manor.getVacuumPosition().getY() == 0
                         || (this.actions.size() > 0 && this.actions.get(0).getClass() == MoveRight.class)))
             && !(action.getClass() == MoveRight.class
                     && (manor.getVacuumPosition().getY() == 4

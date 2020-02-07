@@ -19,8 +19,8 @@ public class Vacuum extends AbstractAgent {
     public Vacuum(Environment environment, Environment perfectState) {
         super(
                 environment,
-                new NotInformedAgentDecisionMaking(perfectState, getActions())
-                //new InformedAgentDecisionMaking(perfectState, getActions())
+                //new NotInformedAgentDecisionMaking(perfectState, getActions())
+                new InformedAgentDecisionMaking(perfectState, getActions())
         );
     }
 
