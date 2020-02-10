@@ -82,7 +82,7 @@ public class Manor implements Environment, Runnable {
     public void run() {
         try {
             while (true) {
-                int sleepTime = (int)(Math.random()*4) + 3;
+                int sleepTime = (int)(Math.random()*3) + 2;
                 TimeUnit.SECONDS.sleep(sleepTime);
                 int x = (int)(Math.random()*5);
                 if(x < 1) {
@@ -92,7 +92,7 @@ public class Manor implements Environment, Runnable {
                 if(y < 1) {
                     y = 1;
                 }
-                if((int)(Math.random()) >= 0.5) {
+                if(Math.random() >= 0.5) {
                     rooms[x-1][y-1].putDust();
                 } else {
                     rooms[x-1][y-1].putJewel();
